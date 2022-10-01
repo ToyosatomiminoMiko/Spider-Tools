@@ -41,20 +41,27 @@ def count_time(fun):
 
     return improved_func
 
-def imgsave(urls,headers,path):
+def download_image(urls: list, headers: dict, path: str) -> int:
     """
     保存网络上的图片
+    - urls
+    图片地址列表
+    - headers
+    请求头
+    - path
+    保存路径(本地)
     """
-    from requests import get
-    i=0
+    i = 0
     for url in urls:
-        filetype=url.split(".")[-1]
-        r=get(url,headers)
-        if r.status_code!=200:
-            return f"状态码:{r.status_code}"
-        with open(f"{path}\\{i}.{filetype}", "wb+")as f1:
-                f1.write(r.content)
-        i+=1
+        file_type = url.split(".")[-1]  # 解析文件类型
+        r = requests.get(url, headers)  # 获取
+        if r.status_code != 200:
+            print(f"状态码:{r.status_code}")
+        with open(f"{path}/{i}.{file_type}", "wb+") as f1:
+            f1.write(r.content)
+        i += 1
+    print(f"下载完毕(共{0}张)", i)
+    return 0
 
 
 
