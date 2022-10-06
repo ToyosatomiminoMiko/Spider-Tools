@@ -1,7 +1,7 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-
+import requests
+import time
+from colorama import Back, Fore, Style
 
 """
 Automation
@@ -9,14 +9,19 @@ Automation
 常用函数
 """
 
-def replace(s,bf,af)->str:
+
+def replace(s: str, bf: str, af: str) -> str:
     """
     替换字符:\n
-    s string str 待替换的字符串;\n
-    bf before str 需要替换的字符;\n
-    af after str 新的字符;
+    - s
+    string str 待替换的字符串;\n
+    - bf
+    before str 需要替换的字符;\n
+    - af
+    after str 新的字符;
     """
     return af.join(s.split(bf))
+
 
 def count_time(fun):
     """
@@ -28,18 +33,16 @@ def count_time(fun):
     def xxx():
     ```
     """
-    from time import perf_counter
-    
-    start_time=perf_counter()
+    start_time = time.perf_counter()
 
-    def improved_func(*args,**kwargs):
-        ret=fun(*args,**kwargs)
-        return ret
+    def improved_func(*args, **kwargs):
+        return fun(*args, **kwargs)
 
-    end_time=perf_counter()
-    print(f"{end_time-start_time:1f}")
+    end_time = time.perf_counter()
+    print(f"{end_time - start_time:1f}")
 
     return improved_func
+
 
 def download_image(urls: list, headers: dict, path: str) -> int:
     """
@@ -64,5 +67,33 @@ def download_image(urls: list, headers: dict, path: str) -> int:
     return 0
 
 
+def upload_image():
+    ...
 
 
+"""
+高亮规则：
+Fore：前景色
+Back：背景色
+Style：样式
+"""
+
+
+def now() -> str:  # 时间
+    return f"[{Fore.GREEN}" + time.strftime("%m-%d %H:%M:%S", time.localtime()) + f"{Fore.RESET}]"
+
+
+def warn(s) -> None:  # 警告
+    print(now(), f"{Fore.YELLOW}[WARNING]{Fore.RESET}", s)
+
+
+def info(s) -> None:  # 信息
+    print(now(), f"{Fore.BLUE}[INFO]{Fore.RESET}", s)
+
+
+def erro(s) -> None:  # 错误
+    print(now(), f"{Fore.RED}[ERROR]{Fore.RESET}", s)
+
+
+def succ(s) -> None:  # 成功 success
+    print(now(), f"{Fore.RED}[SUCCESS]{Fore.RESET}", s)
